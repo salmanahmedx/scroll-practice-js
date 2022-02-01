@@ -31,9 +31,10 @@ navToggle.addEventListener("click", function () {
 
 const navbar = document.getElementById("nav");
 const topLink = document.querySelector(".top-link")
+
 // ********** fixed navbar ************
 window.addEventListener("scroll", function () {
-    const scrollHeight = window.pageYOffset;
+    const scrollHeight = window.pageYOffset; //total pixel that we scrolled
     const navHeight = navbar.getBoundingClientRect().height;
     if (scrollHeight > navHeight) {
         navbar.classList.add("fixed-nav");
@@ -46,7 +47,9 @@ window.addEventListener("scroll", function () {
         topLink.classList.remove("show-link")
     }
 })
+
 // ********** smooth scroll ************
+
 // select links
 const scrollLinks = document.querySelectorAll(".scroll-link");
 
@@ -54,11 +57,31 @@ scrollLinks.forEach(function (link) {
     link.addEventListener("click", function (e) {
         //prevent default behavior
         e.preventDefault();
+
         //navigate to speicic spot
         const id = e.currentTarget.getAttribute('href').slice(1);
         const element = document.getElementById(id)
-        let position = element.offsetTop;
-        console.log(position)
+
+
+        //calculating the heights
+        const navHeight = navbar.getBoundingClientRect().height;
+        const containerHeight = linksContainer.getBoundingClientRect().height;
+        const fixedNav = navbar.classList.contains("fixed-nav"); //true/false
+        let position = element.offsetTop - navHeight; //provides us the height from top
+
+        if (!fixedNav) {
+            position = position - navHeight;
+        }
+        if (navHeight > 82) {
+            position = position + containerHeight;
+        }
+
+        window.scrollTo({
+            left: 0,
+            top: position,
+        })
+
+        linksContainer.style.height = 0;
     })
 })
 

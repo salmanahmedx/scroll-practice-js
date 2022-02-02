@@ -72,6 +72,9 @@ scrollLinks.forEach(function (link) {
         if (!fixedNav) {
             position = position - navHeight;
         }
+        //why? after we convert our navbar to position fixed, it's out of the flow from our document. Fixed nav don't occupy a position! It's like higher z-index. Before it was fixed, lets say its height was 100 and total top distance of about was 500. After it was fixed, those 100 are not counted and the top distance become 400. So, we deduct navHeight again as it disappeared upon the conversion of fixed nav. Visualize or draw the scenario.
+
+
         if (navHeight > 82) {
             position = position + containerHeight;
         }
